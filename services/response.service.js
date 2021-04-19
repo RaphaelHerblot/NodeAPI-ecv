@@ -39,8 +39,8 @@ Service definition
 
         // Check for redirection
         return redirect
-        ? res.status(200).redirect(vue)
-        : res.status(200).render(vue, { data: apiResponse });
+            ? res.status(200).redirect(vue)
+            : res.status(200).render(vue, { data: apiResponse });
     }
 
     const renderErrorVue = (vue, req, res, err, message) => {
@@ -55,7 +55,7 @@ Service definition
 
         return res.status(500).render(vue, { data: apiResponse });
     }
-// 
+//
 
 
 /*

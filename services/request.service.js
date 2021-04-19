@@ -23,7 +23,7 @@ Service definition
             }
         
             // Set service state
-            const ok = (extra.length === 0 && miss.length === 0);
+            const ok = (miss.length === 0);
             
             // Return service state
             return { ok, extra, miss };

@@ -1,0 +1,14 @@
+<!-- 
+    Créer le formulaire de création d'un commentaire
+-->
+
+<form action="/comment" method="POST">
+
+    <input type="hidden" name="post" id="post" value="<%- data.data.post.id %>">
+
+    <label>Ecrire un commentaire</label>
+    <input type="text" id="content" value="Blabla..." name="content" required />
+
+    <button type="submit">Commenter</button>
+
+</form>

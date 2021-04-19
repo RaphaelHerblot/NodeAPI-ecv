@@ -44,19 +44,19 @@ CRUD methods
             // Get post by ID
             Models.post.findById( req.params.id )
             .then( post => {
-                // Update object
-                post.headline = req.body.headline;
-                post.body = req.body.body;
-                post.dateModified = new Date();
-
-                // TODO: Check author
-                /* if( post.author !== req.user._id ){ return reject('User not authorized') }
-                else{ } */
-
-                // Save post changes
-                post.save()
-                .then( updatedPost => resolve(updatedPost) )
-                .catch( updateError => reject(updateError) )
+                if( post.author !== req.user._id ){ 
+                    return reject('The user is not authorized') 
+                } else { 
+                    // Update object
+                    post.headline = req.body.headline;
+                    post.body = req.body.body;
+                    post.dateModified = new Date();
+                    
+                    // Save post changes
+                    post.save()
+                    .then( updatedPost => resolve(updatedPost) )
+                    .catch( updateError => reject(updateError) )
+                }
             })
             .catch( err => reject(err) )
         })
@@ -69,21 +69,6 @@ CRUD methods
                 if( err ){ return reject(err) }
                 else{ return resolve(deleted) };
             })
-            
-            // Get post by ID
-            /* Models.post.findById( req.params.id )
-            .then( post => {
-                // TODO: Check author
-                if( post.author !== req.user._id ){ return reject('User not authorized') }
-                else{
-                    // Delete object
-                    Models.post.findByIdAndDelete( req.params.id, (err, deleted) => {
-                        if( err ){ return reject(err) }
-                        else{ return resolve(deleted) };
-                    })
-                }
-            })
-            .catch( err => reject(err) ); */
         });
     }
 //

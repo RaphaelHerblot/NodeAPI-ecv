@@ -8,12 +8,16 @@
     <%- include('components/form-post') -%>
 
     <h3>Liste des articles</h3>
+    <% if( data.data ) { %>
         <% for(let item of data.data) { %>
             <li>
                 <h4><%- item.headline %></h4>
                 <a href="/post/<%- item._id %>">Voir plus</a>
             </li>
         <% } %>
+    <% } else { %>
+        <p>aucun post</p>
+    <% } %>
     <ul>
 </main>
 

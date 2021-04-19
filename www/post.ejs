@@ -1,0 +1,55 @@
+<!-- Importer le header en EJS -->
+<%- include('statics/header') -%>
+
+<main>
+	<h2>Page protégée</h2>
+
+	<h3><%- data.data.post.headline %></h3>
+
+	<div>
+		<p>
+			<span class="glyphicon glyphicon-heart like_button like_post" onclick="likePost('<%- data.data.post.id %>', '<%- data.data.user.id %>')"> 
+				<span class="amountLikesPost"><%- data.data.likePost.length %></span>
+			</span>
+		</p>	
+		<p>
+			<%- data.data.post.body %>
+		</p>
+	</div>
+
+	<div>
+	<h4>Commentaires de l'article</h4>
+		<% if( data.data.comments ) { %>
+			<div>
+				<% for(let item of data.data.comments) { %>
+					<div class="comment-container-<%- item.id %>">
+						<span class="username"><%= new Date(item.dateModified).toLocaleString(); %>
+							-
+							<%-item.author.givenName %> 
+							:
+						</span>
+						<p>
+							<span class="comment_content"><%- item.content %></span>
+							<span class="glyphicon glyphicon-heart like_button" onclick="likeComment('<%- item.id %>', '<%- data.data.user.id %>' )">
+								<span class="amountLikesComment_<%- item.id %>"><%- item.likes.length %></span>
+							</span>
+							<% if( item.author.id == data.data.user.id ) { %>
+								<button type="button" onclick="deleteComment('<%- item.id %>')" class="error-btn delete-btn">Supprimer</button>
+							<% } %>
+						</p>
+					</div>
+				<% } %>
+			</div>
+		<% } else { %>
+			<p>Il n'y a pas encore de commentaire</p>
+		<% } %>
+
+		<section>
+			<%- include('components/form-comment') -%>
+		</section>
+	</div>
+
+</main>
+
+<!-- Importer le footer en EJS -->
+<%- include('statics/footer') -%>

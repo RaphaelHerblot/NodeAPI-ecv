@@ -27,6 +27,13 @@ Definition
             ref: 'comment'  
         }],
 
+        likes: [{
+            type: Schema.Types.ObjectId,
+            ref: 'like'
+        }],
+
+        nbLikes : { type: Number, default: 0 },
+
         // Définir une valeur par défaut
         creationDate: { type: Date, default: new Date() },
         dateModified: { type: Date, default: new Date() },

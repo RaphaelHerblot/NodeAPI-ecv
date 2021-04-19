@@ -21,6 +21,17 @@ Definition
         // Définir une valeur de propriété unique
         email: { unique: true, type: String },
 
+        // Commentaires associés à un utilisateur
+        comments: [{
+            type: Schema.Types.ObjectId,
+            ref: 'comment'  
+        }],
+
+        likes: [{
+            type: Schema.Types.ObjectId,
+            ref: 'like'
+        }],
+
         // Définir une valeur par défaut
         creationDate: { type: Date, default: new Date() },
         banished: { type: Boolean, default: false }
