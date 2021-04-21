@@ -8,6 +8,7 @@ Imports
     const cookieParser = require('cookie-parser'); //=> https://www.npmjs.com/package/cookie-parser
     const passport = require('passport'); //=> https://www.npmjs.com/package/passport
     const path = require('path'); //=> https://www.npmjs.com/package/path
+    const cors = require('cors');
 
     // Services
     const MONGOclass = require('./services/mongo.class');
@@ -25,20 +26,22 @@ class ServerClass{
 
     init(){
         // Set CORS
-        this.server.use( (req, res, next) => {
-            // Define allowed origins
-            const allowedOrigins = process.env.ALLOWED_ORIGINS.split(', ');
-            const origin = req.headers.origin;
+        // this.server.use( (req, res, next) => {
+        //     // Define allowed origins
+        //     const allowedOrigins = process.env.ALLOWED_ORIGINS.split(', ');
+        //     const origin = req.headers.origin;
 
-            // Setup CORS
-            if(allowedOrigins.indexOf(origin) > -1){ res.setHeader('Access-Control-Allow-Origin', origin)}
-            res.header('Access-Control-Allow-Credentials', true);
-            res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'DELETE', 'POST']);
-            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        //     // Setup CORS
+        //     if(allowedOrigins.indexOf(origin) > -1){ res.setHeader('Access-Control-Allow-Origin', origin)}
+        //     res.header('Access-Control-Allow-Credentials', true);
+        //     res.header('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'DELETE', 'POST']);
+        //     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-            // Use next() function to continue routing
-            next();
-        });
+        //     // Use next() function to continue routing
+        //     next();
+        // });
+
+        this.server.use(cors());
 
         //=> Set server view engine: use EJS (https://ejs.co)
         this.server.set( 'view engine', 'ejs' );

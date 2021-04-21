@@ -21,6 +21,7 @@ CRUD methods
             Models.post.find()
             .populate('author', [ '-password' ])
             .exec( (err, data) => {
+                console.log(data);
                 if( err ){ return reject(err) }
                 else{ return resolve(data) }
             })

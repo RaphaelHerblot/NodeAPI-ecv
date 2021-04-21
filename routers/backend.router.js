@@ -60,7 +60,7 @@ Routes definition
                 }
             })
 
-             // [BACKOFFICE] Get data from the form to register an user and render register vue
+            // [BACKOFFICE] Get data from the form to register an user and render register vue
             this.router.post('/register', (req, res) => {
 
                 // Check body data

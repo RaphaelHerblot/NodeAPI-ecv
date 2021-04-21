@@ -24,6 +24,50 @@ Routes definition
         }
 
         routes(){
+
+            // FRONT : get data from client to log user and render index vue 
+            this.router.post('/login', (req, res) => {
+                // Check body data
+                if( typeof req.body === 'undefined' || req.body === null || Object.keys(req.body).length === 0 ){ 
+                    return sendApiErrorResponse('index', req, res, 'No data provided',  'Request failed')
+                }
+                else{
+                    
+                    // Check body data
+                    const { ok, extra, miss } = checkFields( Mandatory.login, req.body );
+
+                    // Error: bad fields provided
+                    if( !ok ){ return sendApiErrorResponse('index', '/Login', 'POST', res, 'Bad fields provided', { extra, miss }) }
+                    else{
+                        Controllers.auth.login(req, res)
+                        .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
+                        .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
+                    }
+                }
+            })
+
+            // FRONT : Get data from the form to register an user and render register vue
+            this.router.post('/register', (req, res) => {
+
+                // Check body data
+                if (typeof req.body === 'undefined' || req.body === null || Object.keys(req.body).length === 0) {
+                    return sendApiErrorResponse('error', req, res, 'No data provided', 'Request failed')
+                }
+                else {
+
+                    // Check body data
+                    const { ok, extra, miss } = checkFields(Mandatory.register, req.body);
+
+                    // Error: bad fields provided
+                    if (!ok) { return sendApiErrorResponse('index', '/register', 'POST', res, 'Bad fields provided', { extra, miss }) }
+                    else {
+                        Controllers.auth.register(req, res)
+                        .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
+                        .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
+                    }
+                }
+            })
+
             // [CRUD] define route to read all objects
             this.router.get('/:endpoint', (req, res) => {
                 // Use the controller to get data

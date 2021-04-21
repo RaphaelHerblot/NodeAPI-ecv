@@ -49,14 +49,14 @@ Controller methods
                     } else {
                         // Generate user JWT
                         const userJwt = data.generateJwt(data);
-
+                        
                         // Set response cookie
                         res.cookie( process.env.COOKIE_NAME, userJwt, { 
                             maxAge: 700000, httpOnly: true 
                         });
 
                         // Send user data
-                        return resolve(data);
+                        return resolve([data, userJwt]);
                     };
                 }
             })
