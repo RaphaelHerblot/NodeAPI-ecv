@@ -70,6 +70,7 @@ Routes definition
 
             // [CRUD] define route to read all objects
             this.router.get('/:endpoint', (req, res) => {
+
                 // Use the controller to get data
                 Controllers[req.params.endpoint].readAll()
                 .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
@@ -115,7 +116,7 @@ Routes definition
 
             // [CRUD] Route to get the likes from a Post
             this.router.get('/:endpoint/:option/:id', this.passport.authenticate('jwt', { session: false, failureRedirect: '/' }), (req, res) => {
-                
+
                 if(req.params.option == "post") {
                     Controllers[req.params.endpoint].readAllLikesOfPost(req.params.id)
                     .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
@@ -124,10 +125,40 @@ Routes definition
                     Controllers[req.params.endpoint].readAllLikesOfComment(req.params.id)
                     .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
                     .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
+                } else if(req.params.option == "from-post")  {
+                    Controllers[req.params.endpoint].readAllCommentsOfPost(req.params.id)
+                    .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
+                    .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
                 } else {
                     console.log("Wrong option");
                 }
                 // Use the controller to get data
+            })
+
+            // [CRUD] define route to create object, protected by Passport MiddleWare
+            this.router.post('/:endpoint', this.passport.authenticate('jwt', { session: false }), (req, res) => {
+                
+                // Check body data
+                if( typeof req.body === 'undefined' || req.body === null || Object.keys(req.body).length === 0 ){ 
+                    return sendApiErrorResponse(req, res, null, 'No data provided in the reqest body')
+                }
+                else{
+                    // Check body data
+                    const { ok, extra, miss } = checkFields( Mandatory[req.params.endpoint], req.body );
+                    
+                    // Error: bad fields provided
+                    if( !ok ){  return sendApiErrorResponse(req, res, { extra, miss }, 'Bad fields provided') }
+                    else{
+
+                        // Add author _id
+                        req.body.author = req.user._id;
+
+                        // Use the controller to create nex object
+                        Controllers[req.params.endpoint].createOne(req)
+                        .then( apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed') )
+                        .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
+                    }
+                }
             })
 
             // [CRUD] define route to create object, protected by Passport MiddleWare
@@ -149,7 +180,6 @@ Routes definition
                         req.body.author = req.user._id;
 
                         if(req.params.option == "like-post") {
-                            console.log("HAY : ", req.body);
                             Controllers[req.params.endpoint].readOneLikeOfPost(req)
                             .then(async data => {
                                 // create like
@@ -168,8 +198,6 @@ Routes definition
                             .catch(apiError => sendApiErrorResponse(res, res, apiError, 'Request failed'));
 
                         } else if(req.params.option == "like-comment") {
-                            console.log("BJR A TOUSSSSSS");
-                            console.log("HAY : ", req.body);
 
                             Controllers[req.params.endpoint].readOneLikeOfComment(req)
                             .then(async data => {

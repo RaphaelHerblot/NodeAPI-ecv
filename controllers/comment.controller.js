@@ -99,7 +99,6 @@ CRUD methods
        });
     }
 
-
     const readAllCommentsOfPost = postId => {
         return new Promise((resolve, reject) => {
             // Mongoose population to get associated data
