@@ -4,6 +4,10 @@ Ce répertoire à été réalisé dans le cadre d'une formation aux techniques s
 
 ## Utilisation de ce répertoire
 
+Ce répertoire doit être utilisé avec le projet "NodeReact-ecv" se trouvant dans mes répertoires GitHub
+pour lier un front avec l'API de ce boilerplate
+Sans le projet "NodeReact-ecv" vous n'aurez accès qu'au backoffice et à la création du CRUD de notre API.
+
 ### Installation des modules
 
 Le projet développé dans ce répertoire utilise différents modules que vous devez au préalable installer en tapant la commande suivante à la racine du répertoire : 
