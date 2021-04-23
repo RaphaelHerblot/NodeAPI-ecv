@@ -41,6 +41,7 @@ class ServerClass{
         //     next();
         // });
 
+        // I needed to comment that part and use this method, it wasn't working for me
         this.server.use(cors());
 
         //=> Set server view engine: use EJS (https://ejs.co)

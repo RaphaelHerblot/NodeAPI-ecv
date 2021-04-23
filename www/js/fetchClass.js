@@ -1,3 +1,5 @@
+// Class to re-use the fetch method
+
 class requestAPI {
     constructor(url, requestType, data = null ) {
         this.url = url;

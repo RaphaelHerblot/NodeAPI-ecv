@@ -83,6 +83,35 @@ Reset
         font-weight: 900;
     }
 
+    .head-post-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .head-post-container svg {
+        fill: #f5c400;
+        width: 25px;
+        height: 25px;
+        margin: 10px;
+    }
+
+    .show-post-container .content-container {
+        font-size: 15px;
+        font-style: italic;
+        margin-left: 20px;
+    }
+
+    .show-post-container .comment {
+        border: 1px solid #ff0000;
+        padding: 10px 10px 0;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+
+    svg {
+        cursor: pointer;
+    }
+
 /**/
 
 

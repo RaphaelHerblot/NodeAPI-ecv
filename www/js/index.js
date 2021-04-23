@@ -35,7 +35,7 @@ function numberLikesPost(postId) {
     })
     .callAPI()
     .then( fetchData => {
-        document.querySelector('.amountLikesPost').innerHTML = fetchData.data.length.toString();
+        document.querySelector('.amountLikesPost').innerHTML = fetchData.data.length.toString()+' likes';
     })
     .catch( error => {
         console.log( error.message );
@@ -47,7 +47,7 @@ function numberLikesComment(commentId) {
     })
     .callAPI()  
     .then( fetchData => {
-        document.querySelector(`.amountLikesComment_${commentId}`).innerHTML = fetchData.data.length.toString();
+        document.querySelector(`.amountLikesComment_${commentId}`).innerHTML = fetchData.data.length.toString()+' likes';
     })
     .catch( error => {
         console.log( error.message );
