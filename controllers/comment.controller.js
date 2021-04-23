@@ -99,6 +99,7 @@ CRUD methods
        });
     }
 
+    // Reading all the comment of a single post
     const readAllCommentsOfPost = postId => {
         return new Promise((resolve, reject) => {
             // Mongoose population to get associated data
@@ -122,9 +123,9 @@ Export controller methods
     module.exports = {
         readAll,
         readOne,
-        readAllCommentsOfPost,
         createOne,
         updateOne,
-        deleteOne
+        deleteOne,
+        readAllCommentsOfPost
     }
 //

@@ -8,6 +8,8 @@ Imports
 CRUD methods
 */
     const createOne = req => {
+        console.log("Params : ", req.body)
+
         return new Promise( (resolve, reject) => {
             Models.post.create( req.body )
             .then( data => resolve(data) )
@@ -44,14 +46,14 @@ CRUD methods
             // Get post by ID
             Models.post.findById( req.params.id )
             .then( post => {
-                if( post.author !== req.user._id ){ 
-                    return reject('The user is not authorized') 
+                if (String(post.author) !== String(req.user._id)) {
+                    return reject('The user is not authorized');
                 } else { 
                     // Update object
                     post.headline = req.body.headline;
                     post.body = req.body.body;
                     post.dateModified = new Date();
-                    
+
                     // Save post changes
                     post.save()
                     .then( updatedPost => resolve(updatedPost) )

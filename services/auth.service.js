@@ -8,12 +8,17 @@ Imports
 /* 
 Methods
 */
-    // Extract token from cookie
+    // Extract token from cookie AND from the header
     const cookieExtractor = (req, res) => {
         let token = null;
+
+        // FRONT : if the header authorization is set, the token is set by taking it from there 
+        // to authorize the user from POST and UPDATE
         if(typeof req.headers.authorization !== 'undefined') {
             token = (req.headers.authorization).split(" ").pop();
         }
+
+        // BACKOFFICE : Otherwise, the token is set by taking it from the cookies
         else if( req && req.cookies){ 
             token = req.cookies[process.env.COOKIE_NAME] 
         } 

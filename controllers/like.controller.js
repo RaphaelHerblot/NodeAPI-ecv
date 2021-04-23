@@ -37,6 +37,7 @@ CRUD methods
                         })
                         .catch( err => reject(err));
                 }
+                // Adding likes to the user
                 await Models.user.findById( data.author )
                     .then( async user => {
                         user.likes.push( data._id );
@@ -135,6 +136,7 @@ CRUD methods
                             })
                             .catch(err => reject(err))
                     }
+                    // Deleting like of the user
                     await Models.user.findById(req.author)
                             .then(user => {
                                 user.likes.splice(req._id);
@@ -153,6 +155,7 @@ CRUD methods
             .catch(err => reject(err))
     }
 
+    // Getting all the likes of a post
     const readAllLikesOfPost = (postId) => {
         return new Promise( (resolve, reject) => {
             Models.like.find({ 
@@ -165,6 +168,7 @@ CRUD methods
         })
     }
 
+    // Getting one like of a post
     const readOneLikeOfPost = req => {
         return new Promise( (resolve, reject) => {
             Models.like.find({ 
@@ -178,6 +182,7 @@ CRUD methods
         })
     }
 
+    // Getting all the likes of a comment
     const readAllLikesOfComment = id => {
         return new Promise( (resolve, reject) => {
             Models.like.find({ comment: id })
@@ -188,6 +193,7 @@ CRUD methods
         })
     }
 
+    // Getting one like of a comment
     const readOneLikeOfComment = (req) => {
         return new Promise( (resolve, reject) => {
             Models.like.find({ 

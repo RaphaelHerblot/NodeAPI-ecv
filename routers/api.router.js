@@ -114,7 +114,7 @@ Routes definition
                 .catch( apiError => sendApiErrorResponse(res, res, apiError, 'Request failed') );
             })
 
-            // [CRUD] Route to get the likes from a Post
+            // [CRUD] Route to get the likes from a post OR likes from a comment OR comments of a post (protected by Passport MiddleWare)
             this.router.get('/:endpoint/:option/:id', this.passport.authenticate('jwt', { session: false, failureRedirect: '/' }), (req, res) => {
 
                 if(req.params.option == "post") {
@@ -142,7 +142,7 @@ Routes definition
                 if( typeof req.body === 'undefined' || req.body === null || Object.keys(req.body).length === 0 ){ 
                     return sendApiErrorResponse(req, res, null, 'No data provided in the reqest body')
                 }
-                else{
+                else {
                     // Check body data
                     const { ok, extra, miss } = checkFields( Mandatory[req.params.endpoint], req.body );
                     
@@ -161,7 +161,7 @@ Routes definition
                 }
             })
 
-            // [CRUD] define route to create object, protected by Passport MiddleWare
+            // [CRUD] define route to like object (posts and comments), protected by Passport MiddleWare
             this.router.post('/:endpoint/:option', this.passport.authenticate('jwt', { session: false, failureRedirect: '/' }), (req, res) => {
 
                 // Check body data
@@ -182,13 +182,13 @@ Routes definition
                         if(req.params.option == "like-post") {
                             Controllers[req.params.endpoint].readOneLikeOfPost(req)
                             .then(async data => {
-                                // create like
+                                // Create like for a post
                                 if (data.length == 0) {
                                     await Controllers[req.params.endpoint].createOne(req)
                                         .then(apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed'))
                                         .catch(apiError => sendApiErrorResponse(res, res, apiError, 'Request failed'))
                                 }
-                                // Delete like
+                                // Delete like for a post
                                 else {
                                     await Controllers[req.params.endpoint].deleteOne(data[0])
                                         .then(apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed'))
@@ -201,13 +201,13 @@ Routes definition
 
                             Controllers[req.params.endpoint].readOneLikeOfComment(req)
                             .then(async data => {
-                                // create like
+                                // Create like of a comment
                                 if (data.length == 0) {
                                     await Controllers[req.params.endpoint].createOne(req)
                                         .then(apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed'))
                                         .catch(apiError => sendApiErrorResponse(res, res, apiError, 'Request failed'))
                                 }
-                                // Delete like
+                                // Delete like of a comment
                                 else {
                                     await Controllers[req.params.endpoint].deleteOne(data[0])
                                         .then(apiResponse => sendApiSuccessResponse(req, res, apiResponse, 'Request succeed'))

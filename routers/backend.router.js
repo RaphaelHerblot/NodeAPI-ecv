@@ -114,33 +114,37 @@ Routes definition
                     comment: null,
                     user: null
                 };
-    
+                
+                // Get the post DATA
                 await Controllers[req.params.endpoint].readOne(req.params.id)
                     .then(post => data.post = post)
                     .catch(() => renderErrorVue('error', req, res, 'Article inconnu', 'Request failed'));
-    
+
+                // Get the user DATA
+                await Controllers['user'].readOne(req.user.id)
+                    .then(user => data.user = user)
+                    .catch(() => data.user = null);
+        
+                // Get all the comments DATA of a single post
                 await Controllers['comment'].readAllCommentsOfPost(data.post.id)
                     .then(comments => {
                         data.comments = comments
                     })
                     .catch(() => data.comments = null);
-    
-                await Controllers['user'].readOne(req.user.id)
-                    .then(user => data.user = user)
-                    .catch(() => data.user = null);
-
+                
+                // Get all likes from a post
                 if(data.post !== null) {
                     await Controllers['like'].readAllLikesOfPost(data.post.id, req.user.id)
                         .then(likePost => data.likePost = likePost)
                         .catch(() => data.likePost = null);
                 }
 
+                // Get all likes from a comment
                 if(data.comment !== null) {
                     await Controllers['like'].readAllLikesOfComment(data.comment.id, req.user.id)
                     .then(likeComment => data.likeComment = likeComment)
                     .catch(() => data.likeComment = null);
                 }
-
 
                 renderSuccessVue('post', req, res, data, 'Request succeed', false)
             })

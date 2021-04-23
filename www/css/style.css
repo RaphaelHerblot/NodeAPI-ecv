@@ -61,6 +61,28 @@ Reset
     input + [type="submit"]{
         margin-top: 2rem;
     }
+
+    button[type="submit"] {
+        margin: 10px 0;
+    }
+
+    .listPost .post-container {
+        border: 1px solid #000;
+        border-radius: 6px;
+        padding: 7px;
+        margin: 10px 0;
+    }
+
+    .listPost .post-container a {
+        color: #0808e4;
+        font-style: italic;
+    }
+
+    .show-post-container h3 {
+        color: #ff0000;
+        font-weight: 900;
+    }
+
 /**/
 
 
@@ -127,10 +149,6 @@ Global
         width: 100%;
         max-width: 70rem;
         margin: auto;
-    }
-
-    main{
-        height: calc(100vh - 10rem);
     }
 
     header, footer{
