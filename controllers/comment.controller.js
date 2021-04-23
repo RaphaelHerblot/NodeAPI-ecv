@@ -92,8 +92,7 @@ CRUD methods
             Models.comment.findByIdAndDelete( req.params.id, (err, deleted) => {
                if( err ){ return reject(err) }
                else{
-                   console.log("Post : ",  req._id)
-                   console.log("Post : ",  req.params.id)
+                    console.log("Comment deleted !");
                }
             })
        });
